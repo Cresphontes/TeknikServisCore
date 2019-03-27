@@ -70,7 +70,24 @@ namespace TeknikServisCore.Web
                 options.AccessDeniedPath = "/Identity/Account/AccessDenied";
                 options.SlidingExpiration = true;
             });
-            
+
+
+            services.AddMvc();
+
+            //services.AddWebOptimizer();
+            //services.AddWebOptimizer(pipeline =>
+            //{
+            //    pipeline.AddJavaScriptBundle("/bundle/scripts.js", "/Themes/blue-free/js/bootstrap.min.js")
+            //    .AdjustRelativePaths()
+            //    .UseContentRoot();
+            //});
+            //services.AddWebOptimizer(pipeline =>
+            //{
+            //    pipeline.AddCssBundle("/bundle/styles.css", "/Themes/blue-free/css/bootstrap.min.css")
+            //    .AdjustRelativePaths()
+            //    .UseContentRoot();
+            //});
+
             //services.AddIdentity<ApplicationUser,ApplicationRole>()
             //    .AddEntityFrameworkStores<ApplicationDbContext>();
 
@@ -93,9 +110,13 @@ namespace TeknikServisCore.Web
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            
+
 
             app.UseAuthentication();
+
+            //app.UseWebOptimizer();
+
+            app.UseStaticFiles();
 
             app.UseMvc(routes =>
             {
@@ -106,5 +127,7 @@ namespace TeknikServisCore.Web
 
             app.UseCookiePolicy();
         }
+
+
     }
 }

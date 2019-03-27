@@ -1,0 +1,25 @@
+[
+  {
+    "outputFileName": "wwwroot/bundle/styles.css",
+    "inputFiles": [
+      "wwwroot/Themes/newbiz-master/lib/bootstrap/css/bootstrap.css",
+      "wwwroot/Themes/newbiz-master/lib/font-awesome/css/font-awesome.css",
+      "wwwroot/Themes/newbiz-master/lib/animate/animate.css",
+      "wwwroot/Themes/newbiz-master/lib/ionicons/css/ionicons.css",
+      "wwwroot/Themes/newbiz-master/lib/owlcarousel/assets/owlcarousel.css",
+      "wwwroot/Themes/newbiz-master/lib/lightbox/css/lightbox.css",
+      "wwwroot/Themes/newbiz-master/css/style.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/bundle/scripts.js",
+    "inputFiles": [
+      "wwwroot/Themes/blue-free/js/bootstrap.min.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  }
+]
