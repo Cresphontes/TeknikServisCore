@@ -1,0 +1,132 @@
+﻿@model TeknikServisCore.Models.ViewModels.RegisterViewModel
+@{
+    ViewData["Title"] = "Register";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+
+
+<div class="container-fluid">
+    <form class="form-horizontal" asp-controller="Account" asp-action="Register" asp-antiforgery="true" method="post">
+        <div id="ff" class="col-md-6">
+            <div class="form-group row">
+                <label class="control-label col-md-3" asp-for="Name">İsim</label>
+                <div class="col-md-9">
+                    <input class="form-control" type="text" asp-for="Name" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="control-label col-md-3" asp-for="Surname">Soyisim</label>
+                <div class="col-md-9">
+                    <input class="form-control" type="text" asp-for="Surname" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="control-label col-md-3" asp-for="Email">Email</label>
+                <div class="col-md-9">
+                    <input class="form-control" type="text" asp-for="Email" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="control-label col-md-3" asp-for="EmailConfirmed">Email Tekrar</label>
+                <div class="col-md-9">
+                    <input class="form-control" type="text" asp-for="EmailConfirmed" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="control-label col-md-3" asp-for="PhoneNumber">Telefon</label>
+                <div class="col-md-9">
+                    <input class="form-control" type="text" asp-for="PhoneNumber" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="control-label col-md-3" asp-for="BirthDate">Doğum Tarihi</label>
+                <div class="col-md-9">
+                    <input class="form-control" type="text" asp-for="BirthDate" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="control-label col-md-3" asp-for="Address">Adres</label>
+                <div class="col-md-9">
+                    <input class="form-control" type="text" asp-for="Address" />
+                </div>
+            </div>
+        </div>
+        <div id="fs" class="col-md-6 hide">
+            <div class="form-group row">
+                <label class="control-label col-md-3" asp-for="Username">Kullanıcı Adı </label>
+                <div class="col-md-9">
+                    <input class="form-control" type="text" asp-for="Username" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="control-label col-md-3" asp-for="Password">Şifre</label>
+                <div class="col-md-9">
+                    <input class="form-control" type="text" asp-for="Password" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="control-label col-md-3" asp-for="ConfirmPassword">Şifre Tekrar</label>
+                <div class="col-md-9">
+                    <input class="form-control" type="text" asp-for="ConfirmPassword" />
+                </div>
+            </div>
+        </div>
+
+        <input id="previous" class="btn btn-info hide" type="button" value="Önceki Sayfa" />
+        <input id="next" class="btn btn-info" type="button" value="Sonraki Sayfa" />
+        <input id="submit" class="btn btn-success hide" type="submit" value="Kaydet" />
+
+    </form>
+
+</div>
+
+@section scripts{
+
+    <script>
+
+        $(document).ready(function () {
+
+            $("#next").click(function () {
+                console.log("aaa");
+
+                $("#previous").show(function () {
+
+                    $("#submit").show(function () {
+
+                        $("#next").hide(function () {
+
+                            $("#form-second").show(function () {
+
+                                $("#form-first").hide();
+                            });
+                        });
+                    });
+                })
+
+            });
+
+            $("#previous").click(function () {
+
+                this.hide(function () {
+
+                    $("#submit").hide(function () {
+
+                        $("#next").show(function () {
+
+                            $("#form-first").show(function () {
+
+                                $("#form-second").hide();
+                            });
+                        });
+                    })
+                })
+            })
+
+        });
+
+
+    </script>
+}
+
+

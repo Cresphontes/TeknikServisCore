@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace TeknikServisCore.Models.IdentityModels
 {
@@ -17,5 +18,6 @@ namespace TeknikServisCore.Models.IdentityModels
         public string ConfirmPassword { get; set; }
         public string Address { get; set; }
         public DateTime RegisterDate { get; set; } = DateTime.Now;
+
     }
 }

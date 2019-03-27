@@ -22,9 +22,16 @@ namespace TeknikServisCore.Web.Controllers
             _signInManager = signInManager;
             _dbContext = dbContext;
         }
-
+        [HttpGet]
         public IActionResult Register()
         {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Register(int model)
+        {
+
             return View();
         }
     }
