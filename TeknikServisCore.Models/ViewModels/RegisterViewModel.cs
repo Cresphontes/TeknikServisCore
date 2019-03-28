@@ -17,8 +17,6 @@ namespace TeknikServisCore.Models.ViewModels
         public string Surname { get; set; }
         [Required,DataType("Email"),DisplayName("Email")]
         public string Email { get; set; }
-        [Required,DataType("Email"),Compare("Email"),DisplayName("Email Tekrar")]
-        public bool EmailConfirmed { get; set; }
         [Required,StringLength(11,ErrorMessage = "Telefon numaranız 11 haneli olmalıdır.") ,DisplayName("Telefon")]
         public string PhoneNumber { get; set; }
         [Required, DisplayName("Doğum Tarihi")]
@@ -29,6 +27,7 @@ namespace TeknikServisCore.Models.ViewModels
         public string ConfirmPassword { get; set; }
         [Required,StringLength(100,ErrorMessage = "Adresiniz en fazla 100 karakter olabilir."), DisplayName("Adres")]
         public string Address { get; set; }
-  
+     
+
     }
 }

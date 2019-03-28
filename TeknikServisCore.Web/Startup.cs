@@ -7,8 +7,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using AutoMapper;
 using TeknikServisCore.DAL;
 using TeknikServisCore.Models.IdentityModels;
+using TeknikServisCore.Models.ViewModels;
 
 namespace TeknikServisCore.Web
 {
@@ -71,8 +73,10 @@ namespace TeknikServisCore.Web
                 options.SlidingExpiration = true;
             });
 
-
+            services.AddAutoMapper();
             services.AddMvc();
+
+            Mapper.Initialize(cfg => MapConfig(cfg));
 
             //services.AddWebOptimizer();
             //services.AddWebOptimizer(pipeline =>
@@ -92,6 +96,12 @@ namespace TeknikServisCore.Web
             //    .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+        }
+
+        private void MapConfig(IMapperConfigurationExpression cfg)
+        {
+            
+            cfg.CreateMap<RegisterViewModel, ApplicationUser>().ReverseMap();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

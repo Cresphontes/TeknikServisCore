@@ -4,124 +4,151 @@
     Layout = "~/Views/Shared/_UserLayout.cshtml";
 }
 
+<style>
 
+    #ff
+    {
+        margin: auto;
+        margin-top:8%;
+        
+    }
+    #fs {
+        margin: auto;
+        margin-top: 14%;
+    }
+    #next {
+        margin-left:65.5%;     
+    }
+    #submit {
+        margin-left: 68.8%;
+        position:relative;
+        bottom:36px;
+    }
+    #previous {
+        margin-left: 38.5%;
+    }
+
+
+</style>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 <div class="container-fluid">
     <form class="form-horizontal" asp-controller="Account" asp-action="Register" asp-antiforgery="true" method="post">
+        <div asp-validation-summary="All" class="text-danger">
+
+        </div>
+        <h2>@TempData["Message"]</h2>
         <div id="ff" class="col-md-6">
             <div class="form-group row">
                 <label class="control-label col-md-3" asp-for="Name">İsim</label>
                 <div class="col-md-9">
                     <input class="form-control" type="text" asp-for="Name" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
                 </div>
             </div>
             <div class="form-group row">
                 <label class="control-label col-md-3" asp-for="Surname">Soyisim</label>
                 <div class="col-md-9">
                     <input class="form-control" type="text" asp-for="Surname" />
+                    <span asp-validation-for="Surname" class="text-danger"></span>
                 </div>
             </div>
             <div class="form-group row">
                 <label class="control-label col-md-3" asp-for="Email">Email</label>
                 <div class="col-md-9">
-                    <input class="form-control" type="text" asp-for="Email" />
+                    <input class="form-control" type="email" asp-for="Email" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
                 </div>
             </div>
-            <div class="form-group row">
-                <label class="control-label col-md-3" asp-for="EmailConfirmed">Email Tekrar</label>
-                <div class="col-md-9">
-                    <input class="form-control" type="text" asp-for="EmailConfirmed" />
-                </div>
-            </div>
+       
             <div class="form-group row">
                 <label class="control-label col-md-3" asp-for="PhoneNumber">Telefon</label>
                 <div class="col-md-9">
                     <input class="form-control" type="text" asp-for="PhoneNumber" />
+                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
                 </div>
             </div>
             <div class="form-group row">
                 <label class="control-label col-md-3" asp-for="BirthDate">Doğum Tarihi</label>
                 <div class="col-md-9">
-                    <input class="form-control" type="text" asp-for="BirthDate" />
+                    <input class="form-control" type="date" asp-for="BirthDate" />
+                    <span asp-validation-for="BirthDate" class="text-danger"></span>
                 </div>
             </div>
             <div class="form-group row">
                 <label class="control-label col-md-3" asp-for="Address">Adres</label>
                 <div class="col-md-9">
                     <input class="form-control" type="text" asp-for="Address" />
+                    <span asp-validation-for="Address" class="text-danger"></span>
                 </div>
             </div>
         </div>
-        <div id="fs" class="col-md-6 hide">
+        <div id="fs" class="col-md-6 ">
             <div class="form-group row">
                 <label class="control-label col-md-3" asp-for="Username">Kullanıcı Adı </label>
                 <div class="col-md-9">
                     <input class="form-control" type="text" asp-for="Username" />
+                    <span asp-validation-for="Username" class="text-danger"></span>
                 </div>
             </div>
             <div class="form-group row">
                 <label class="control-label col-md-3" asp-for="Password">Şifre</label>
                 <div class="col-md-9">
-                    <input class="form-control" type="text" asp-for="Password" />
+                    <input class="form-control" type="password" asp-for="Password" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
                 </div>
             </div>
             <div class="form-group row">
                 <label class="control-label col-md-3" asp-for="ConfirmPassword">Şifre Tekrar</label>
                 <div class="col-md-9">
-                    <input class="form-control" type="text" asp-for="ConfirmPassword" />
+                    <input class="form-control" type="password" asp-for="ConfirmPassword" />
+                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                 </div>
             </div>
         </div>
 
-        <input id="previous" class="btn btn-info hide" type="button" value="Önceki Sayfa" />
-        <input id="next" class="btn btn-info" type="button" value="Sonraki Sayfa" />
-        <input id="submit" class="btn btn-success hide" type="submit" value="Kaydet" />
+        <input id="previous" class="btn btn-info" type="button" value="Önceki Sayfa"/>
+        <input id="next" class="btn btn-info" type="button" value="Sonraki Sayfa"/>
+        <input id="submit" class="btn btn-success " type="submit" value="Kaydet"/>
 
     </form>
 
 </div>
 
-@section scripts{
+@section Scripts
+{
 
-    <script>
+    <script type="text/javascript">
 
-        $(document).ready(function () {
+        $(document).ready(function() {
 
-            $("#next").click(function () {
-                console.log("aaa");
+            $("#previous").hide();
+            $("#submit").hide();
+            $("#fs").hide();
 
-                $("#previous").show(function () {
+            $("#next").click(function() {
 
-                    $("#submit").show(function () {
+                $("#previous").show()
+                $("#submit").show();
+                $("#next").hide();
+                $("#fs").show();
+                $("#ff").hide();
 
-                        $("#next").hide(function () {
-
-                            $("#form-second").show(function () {
-
-                                $("#form-first").hide();
-                            });
-                        });
-                    });
-                })
 
             });
 
-            $("#previous").click(function () {
+            $("#previous").click(function() {
 
-                this.hide(function () {
+                $("#previous").hide()
+                $("#submit").hide();
+                $("#next").show();
+                $("#ff").show();
+                $("#fs").hide();
 
-                    $("#submit").hide(function () {
 
-                        $("#next").show(function () {
-
-                            $("#form-first").show(function () {
-
-                                $("#form-second").hide();
-                            });
-                        });
-                    })
-                })
-            })
+            });
 
         });
 
