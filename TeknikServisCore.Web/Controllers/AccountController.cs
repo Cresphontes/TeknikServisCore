@@ -102,10 +102,36 @@ namespace TeknikServisCore.Web.Controllers
             }
         }
 
+
+        [HttpGet]
         public IActionResult Login()
         {
 
             return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginViewModel model)
+        {
+
+            var result = await _signInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, true);
+
+            if (result.Succeeded)
+            {
+                return RedirectToAction("Register", "Account");
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty,"Kullanıcı adı veya şifre hatalı.");
+            }
+
+            return View(model);
+        }
+
+
+        public async Task<IActionResult> LogOutAsync()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Login");
         }
     }
 }

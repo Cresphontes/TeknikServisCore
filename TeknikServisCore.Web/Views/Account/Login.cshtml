@@ -1,8 +1,78 @@
-﻿
+﻿@model TeknikServisCore.Models.ViewModels.LoginViewModel
 @{
     ViewData["Title"] = "Login";
     Layout = "~/Views/Shared/_UserLayout.cshtml";
 }
 
-<h2>Login</h2>
+<style>
+
+    #frm {
+        margin: auto;
+        margin-top: 15%;
+    }
+
+    #frmbtn {
+
+        margin-left: 45%;
+    }
+    #passfrgt
+    {
+        margin-left: 25%;
+    }
+ 
+</style>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<div class="container-fluid">
+    <form class="form-horizontal" asp-controller="Account" asp-action="Login" asp-antiforgery="true" method="post">
+        <div asp-validation-summary="All" class="text-danger">
+        </div>
+        <h2>@TempData["Message"]</h2>
+        <div id="frm" class="col-md-4">
+            <div class="form-group row">
+                <label class="control-label col-md-3" asp-for="Username">Kullanıcı Adı </label>
+                <div class="col-md-9">
+                    <input class="form-control" type="text" asp-for="Username" />
+                    <span asp-validation-for="Username" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="control-label col-md-3" asp-for="Password">Şifre</label>
+                <div class="col-md-9">
+                    <input class="form-control" type="password" asp-for="Password" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="control-label col-md-3" asp-for="RememberMe">Beni Hatırla</label>
+                <div class="col-md-2">
+                    <input style="width:25px;height: 25px" class="form-control" type="checkbox" asp-for="RememberMe" />
+                </div>
+            </div>
+        </div>
+        <div id="frmbtn" class="row">
+            <div class="col-md-offset-6 col-md-3 ">
+                <input id="passfrgt" class="btn btn-warning " type="button" value="Şifremi Unuttum" />
+            </div>
+            <div class="col-md-3">
+                <input id="submit" class="btn btn-success " type="submit" value="Giriş Yap" />
+            </div>
+        </div>
+            
+            
+       
+       
+
+    </form>
+
+</div>
+
+@section Scripts
+    {
+
+
+}
+
 
