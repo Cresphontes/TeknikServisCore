@@ -102,6 +102,9 @@ namespace TeknikServisCore.Web
         {
             
             cfg.CreateMap<RegisterViewModel, ApplicationUser>().ReverseMap();
+            cfg.CreateMap<ProfileEditViewModel, ApplicationUser>().ReverseMap();
+           
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

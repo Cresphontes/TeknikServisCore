@@ -31,6 +31,7 @@ namespace TeknikServisCore.Web.Controllers
             _dbContext = dbContext;
             
         }
+
         [HttpGet]
         public IActionResult Register()
         {
@@ -38,6 +39,7 @@ namespace TeknikServisCore.Web.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
             if (!ModelState.IsValid)
@@ -109,7 +111,10 @@ namespace TeknikServisCore.Web.Controllers
 
             return View();
         }
+
+
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
 
@@ -127,8 +132,9 @@ namespace TeknikServisCore.Web.Controllers
             return View(model);
         }
 
-
-        public async Task<IActionResult> LogOutAsync()
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> LogOut()
         {
             await _signInManager.SignOutAsync();
             return RedirectToAction("Login");
