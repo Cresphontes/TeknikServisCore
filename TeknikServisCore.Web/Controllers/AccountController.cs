@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using TeknikServisCore.BLL.Services;
 using TeknikServisCore.DAL;
 using TeknikServisCore.Models.Enums;
 using TeknikServisCore.Models.IdentityModels;
@@ -67,7 +69,21 @@ namespace TeknikServisCore.Web.Controllers
                        await _userManager.AddToRoleAsync(user, IdentityRoles.User.ToString());
                    }
 
-                   return RedirectToAction("Login");
+                   //string siteUrl = Request. + Uri.SchemeDelimiter + Request.Url.Host +
+                   //                 (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port);
+
+                   var emailService = new EmailService();
+
+                    var body = $"Merhaba <b>{user.Name} {user.Surname}</b><br>Hesabınızı aktif etmek için aşağıdaki linke tıklayınız<br> <a href='{siteUrl}/Account/Activation?code={user.ActivationCode}'>Aktivasyon Linki</a>";
+
+                    await emailService.SendAsync(new MessageViewModel()
+                    {
+                        Body = body,
+                        Subject = "Sitemize Hoşgeldiniz."
+
+                    },user.Email);
+
+                    return RedirectToAction("Login");
                 }
                else
                {
@@ -132,8 +148,8 @@ namespace TeknikServisCore.Web.Controllers
             return View(model);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        
+       
         public async Task<IActionResult> LogOut()
         {
             await _signInManager.SignOutAsync();

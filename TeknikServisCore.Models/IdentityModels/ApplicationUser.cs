@@ -19,5 +19,7 @@ namespace TeknikServisCore.Models.IdentityModels
         public string Address { get; set; }
         public DateTime RegisterDate { get; set; } = DateTime.Now;
 
+        public string ActivationCode { get; set; }
+
     }
 }

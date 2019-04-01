@@ -34,6 +34,11 @@ namespace TeknikServisCore.Web.Controllers
 
             var user = await _userManager.GetUserAsync(User);
 
+            if (user == null)
+            {
+                return RedirectToAction("Login");
+            }
+
             var model = Mapper.Map<ProfileEditViewModel>(user);
            
 
@@ -54,7 +59,10 @@ namespace TeknikServisCore.Web.Controllers
 
                 var user = await _userManager.GetUserAsync(User);
 
+            
+
                 user = Mapper.Map<ApplicationUser>(model);
+                
                 _db.SaveChanges();
 
                 TempData["Message"] = "Güncelleme işlemi başarılı.";
@@ -74,30 +82,38 @@ namespace TeknikServisCore.Web.Controllers
         public async Task<IActionResult> EditPassword(PasswordEditViewModel model)
         {
 
+            var user = await _userManager.GetUserAsync(User);
+
+            if (user == null)
+            {
+                return RedirectToAction("Login");
+            }
+
+            var model1 = Mapper.Map<ProfileEditViewModel>(user);
+
             if (!ModelState.IsValid)
             {
-                return View("Partials/_EditPasswordPartial",model);
+                return View("EditProfile", model1);
             }
 
             try
             {
-                var user = await _userManager.GetUserAsync(User);
-
-
+                
                 if (model.OldPassword == user.Password)
                 {
                     user.Password = model.NewPassword;
+                    user.ConfirmPassword = model.ConfirmNewPassword;
                     _db.SaveChanges();
 
                     TempData["Message"] = "Şifre güncelleme işlemi başarılı.";
 
-                    return View("Partials/_EditPasswordPartial", model);
+                    return View("EditProfile", model1);
                 }
                 else
                 {
-                    TempData["Message"] = "Eski şifre ile yeni şifre uyuşmuyor";
+                    TempData["Message"] = "Mevcut şifrenizi yanlış girdiniz.";
 
-                    return View("Partials/_EditPasswordPartial", model);
+                    return View("EditProfile", model1);
                 }
                 
 
@@ -105,7 +121,7 @@ namespace TeknikServisCore.Web.Controllers
             catch (Exception e)
             { 
                 TempData["Message"] = e;
-                return View("Partials/_EditPasswordPartial", model);
+                return View("EditProfile", model1);
             }
 
           

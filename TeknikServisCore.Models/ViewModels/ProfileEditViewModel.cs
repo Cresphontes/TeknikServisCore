@@ -8,6 +8,9 @@ namespace TeknikServisCore.Models.ViewModels
 {
     public class ProfileEditViewModel
     {
+
+        public string NormalizedUsername { get; set; }
+
         [Required, MinLength(3, ErrorMessage = "Kullanıcı adınız 3 karakterden fazla olmalıdır."), MaxLength(15, ErrorMessage = "Kullanıcı adınız 15 karakterden az olmalıdır."), DisplayName("Kullanıcı Adı")]
         public string Username { get; set; }
         [Required, MinLength(2, ErrorMessage = "İsminiz 2 karakterden fazla olmalıdır."), MaxLength(25, ErrorMessage = "İsminiz 25 karakterden az olmalıdır."), DisplayName("İsim")]
@@ -24,5 +27,7 @@ namespace TeknikServisCore.Models.ViewModels
         
         [Required, StringLength(100, ErrorMessage = "Adresiniz en fazla 100 karakter olabilir."), DisplayName("Adres")]
         public string Address { get; set; }
+
+        public PasswordEditViewModel PasswordEditViewModel { get; set; } = new PasswordEditViewModel();
     }
 }
