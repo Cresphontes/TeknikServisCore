@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using AutoMapper;
+using TeknikServisCore.BLL.Helpers;
 using TeknikServisCore.DAL;
 using TeknikServisCore.Models.IdentityModels;
 using TeknikServisCore.Models.ViewModels;
@@ -100,10 +101,28 @@ namespace TeknikServisCore.Web
 
         private void MapConfig(IMapperConfigurationExpression cfg)
         {
-            
-            cfg.CreateMap<RegisterViewModel, ApplicationUser>().ReverseMap();
-            cfg.CreateMap<ProfileEditViewModel, ApplicationUser>().ReverseMap();
-           
+
+            cfg.CreateMap<RegisterViewModel, ApplicationUser>()
+                .ForMember(dest => dest.ActivationCode, opt => opt.MapFrom(x => StringHelpers.GetCode()));
+            cfg.CreateMap<ApplicationUser, RegisterViewModel>()
+                .ForMember(dest => dest.ActivationCode, opt => opt.MapFrom(x => x.ActivationCode));
+
+            //cfg.CreateMap<ProfileViewModel, ApplicationUser>()
+            //    .ForMember(dest => dest.NormalizedUserName,
+            //        opt => opt.MapFrom(x => x.Username.ToUpper()));
+            //    //.ForMember(dest => dest.Password,
+            //    //opt => opt.MapFrom(x => x.PasswordEditViewModel.NewPassword));
+
+            cfg.CreateMap<ApplicationUser, ProfileViewModel>();
+            cfg.CreateMap<ProfileViewModel, ApplicationUser>().ForMember(dest => dest.NormalizedUserName,
+                opt => opt.MapFrom(x => x.UserName.ToUpper()));
+            cfg.CreateMap<ApplicationUser, PasswordEditViewModel>().ReverseMap();
+            cfg.CreateMap<ApplicationUser, ProfileViewModel>().ReverseMap();
+
+
+
+
+
 
         }
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.IdentityModel.Tokens;
@@ -13,7 +14,7 @@ using TeknikServisCore.Models.ViewModels;
 
 namespace TeknikServisCore.Web.Controllers
 {
-    public class ProfileController:Controller
+    public class ProfileController : Controller
     {
 
         private readonly UserManager<ApplicationUser> _userManager;
@@ -39,8 +40,26 @@ namespace TeknikServisCore.Web.Controllers
                 return RedirectToAction("Login");
             }
 
-            var model = Mapper.Map<ProfileEditViewModel>(user);
-           
+            ProfileEditViewModel model = new ProfileEditViewModel()
+            {
+                PasswordEditViewModel =
+                {
+                    NewPassword =  "",
+                    OldPassword = "",
+                    ConfirmNewPassword = ""
+                },
+                ProfileViewModel =
+                {
+                    UserName = user.UserName,
+                    Name = user.Name,
+                    Surname = user.Surname,
+                    Address = user.Address,
+                    Email = user.Email,
+                    BirthDate = user.BirthDate,
+                    PhoneNumber = user.PhoneNumber
+
+                }
+            };
 
             return View(model);
         }
@@ -59,19 +78,31 @@ namespace TeknikServisCore.Web.Controllers
 
                 var user = await _userManager.GetUserAsync(User);
 
-            
+                //user = Mapper.Map<ApplicationUser>(model);
+                user.UserName = model.ProfileViewModel.UserName;
+                user.NormalizedUserName = model.ProfileViewModel.UserName.ToUpper();
+                user.Address = model.ProfileViewModel.Address;
+                user.PhoneNumber = model.ProfileViewModel.PhoneNumber;
+                user.BirthDate = model.ProfileViewModel.BirthDate;
+                user.Email = model.ProfileViewModel.Email;
 
-                user = Mapper.Map<ApplicationUser>(model);
-                
-                _db.SaveChanges();
+                var result = await _userManager.UpdateAsync(user);
 
-                TempData["Message"] = "Güncelleme işlemi başarılı.";
+                if (result.Succeeded)
+                {
+                    TempData["Message"] = "Güncelleme işlemi başarılı.";
+                }
+                else
+                {
+                    TempData["Message"] = "Güncelleme işlemi başarısız.";
+                }
+
 
                 return View(model);
             }
             catch (Exception)
             {
-                TempData["Message"] = "Kaydetmek istediğiniz bölümdeki tüm alanları doldurunuz.";
+                TempData["Message"] = "Güncelleme işlemi sırasında bir hata oluştu.";
 
                 return View(model);
             }
@@ -79,7 +110,7 @@ namespace TeknikServisCore.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditPassword(PasswordEditViewModel model)
+        public async Task<IActionResult> EditPassword(ProfileEditViewModel model)
         {
 
             var user = await _userManager.GetUserAsync(User);
@@ -89,43 +120,42 @@ namespace TeknikServisCore.Web.Controllers
                 return RedirectToAction("Login");
             }
 
-            var model1 = Mapper.Map<ProfileEditViewModel>(user);
 
             if (!ModelState.IsValid)
             {
-                return View("EditProfile", model1);
+                return View("EditProfile");
             }
 
             try
             {
-                
-                if (model.OldPassword == user.Password)
+
+                var result = await _userManager.ChangePasswordAsync(user, model.PasswordEditViewModel.OldPassword,
+                    model.PasswordEditViewModel.ConfirmNewPassword);
+
+                if (result.Succeeded)
                 {
-                    user.Password = model.NewPassword;
-                    user.ConfirmPassword = model.ConfirmNewPassword;
-                    _db.SaveChanges();
-
                     TempData["Message"] = "Şifre güncelleme işlemi başarılı.";
-
-                    return View("EditProfile", model1);
                 }
                 else
                 {
-                    TempData["Message"] = "Mevcut şifrenizi yanlış girdiniz.";
+                    TempData["Message"] = "Şifre güncelleme işlemi başarısız.";
 
-                    return View("EditProfile", model1);
                 }
-                
+
+
+                return View("EditProfile");
 
             }
             catch (Exception e)
-            { 
+            {
                 TempData["Message"] = e;
-                return View("EditProfile", model1);
+
+
+                return View("EditProfile");
             }
 
-          
+
         }
-     
+
     }
 }

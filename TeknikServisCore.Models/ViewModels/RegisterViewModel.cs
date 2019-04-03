@@ -27,7 +27,9 @@ namespace TeknikServisCore.Models.ViewModels
         public string ConfirmPassword { get; set; }
         [Required,StringLength(100,ErrorMessage = "Adresiniz en fazla 100 karakter olabilir."), DisplayName("Adres")]
         public string Address { get; set; }
-     
+
+        public string ActivationCode { get; set; }
+
 
     }
 }

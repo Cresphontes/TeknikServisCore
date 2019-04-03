@@ -15,56 +15,55 @@
                 </div>
                 <h2>@TempData["Message"]</h2>
 
-                <input type="hidden" class="form-control" asp-for="@Model.NormalizedUsername" />
 
                 <div class="form-group row">
-                    <label class="control-label col-md-3" asp-for="@Model.Username">Kullanıcı Adı </label>
+                    <label class="control-label col-md-3" asp-for="@Model.ProfileViewModel.UserName">Kullanıcı Adı </label>
                     <div class="col-md-9">
-                        <input class="form-control" type="text" asp-for="@Model.Username" />
-                        <span asp-validation-for="@Model.Username" class="text-danger"></span>
+                        <input class="form-control" type="text" asp-for="@Model.ProfileViewModel.UserName" />
+                        <span asp-validation-for="@Model.ProfileViewModel.UserName" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label class="control-label col-md-3" asp-for="@Model.Name">İsim</label>
+                    <label class="control-label col-md-3" asp-for="@Model.ProfileViewModel.Name">İsim</label>
                     <div class="col-md-9">
-                        <input class="form-control" type="text" asp-for="@Model.Name" />
-                        <span asp-validation-for="@Model.Name" class="text-danger"></span>
+                        <input class="form-control" type="text" asp-for="@Model.ProfileViewModel.Name" />
+                        <span asp-validation-for="@Model.ProfileViewModel.Name" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label class="control-label col-md-3" asp-for="@Model.Surname">Soyisim</label>
+                    <label class="control-label col-md-3" asp-for="@Model.ProfileViewModel.Surname">Soyisim</label>
                     <div class="col-md-9">
-                        <input class="form-control" type="text" asp-for="@Model.Surname" />
-                        <span asp-validation-for="@Model.Surname" class="text-danger"></span>
+                        <input class="form-control" type="text" asp-for="@Model.ProfileViewModel.Surname" />
+                        <span asp-validation-for="@Model.ProfileViewModel.Surname" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label class="control-label col-md-3" asp-for="@Model.Email">Email</label>
+                    <label class="control-label col-md-3" asp-for="@Model.ProfileViewModel.Email">Email</label>
                     <div class="col-md-9">
-                        <input class="form-control" type="email" asp-for="@Model.Email" />
-                        <span asp-validation-for="@Model.Email" class="text-danger"></span>
+                        <input class="form-control" type="email" asp-for="@Model.ProfileViewModel.Email" />
+                        <span asp-validation-for="@Model.ProfileViewModel.Email" class="text-danger"></span>
                     </div>
                 </div>
 
                 <div class="form-group row">
-                    <label class="control-label col-md-3" asp-for="@Model.PhoneNumber">Telefon</label>
+                    <label class="control-label col-md-3" asp-for="@Model.ProfileViewModel.PhoneNumber">Telefon</label>
                     <div class="col-md-9">
-                        <input class="form-control" type="text" asp-for="@Model.PhoneNumber" />
-                        <span asp-validation-for="@Model.PhoneNumber" class="text-danger"></span>
+                        <input class="form-control" type="text" asp-for="@Model.ProfileViewModel.PhoneNumber" />
+                        <span asp-validation-for="@Model.ProfileViewModel.PhoneNumber" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label class="control-label col-md-3" asp-for="@Model.BirthDate">Doğum Tarihi</label>
+                    <label class="control-label col-md-3" asp-for="@Model.ProfileViewModel.BirthDate">Doğum Tarihi</label>
                     <div class="col-md-9">
-                        <input class="form-control" type="date" asp-for="@Model.BirthDate" />
-                        <span asp-validation-for="@Model.BirthDate" class="text-danger"></span>
+                        <input class="form-control" type="date" asp-for="@Model.ProfileViewModel.BirthDate" />
+                        <span asp-validation-for="@Model.ProfileViewModel.BirthDate" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label class="control-label col-md-3" asp-for="@Model.Address">Adres</label>
+                    <label class="control-label col-md-3" asp-for="@Model.ProfileViewModel.Address">Adres</label>
                     <div class="col-md-9">
-                        <input class="form-control" type="text" asp-for="@Model.Address" />
-                        <span asp-validation-for="@Model.Address" class="text-danger"></span>
+                        <input class="form-control" type="text" asp-for="@Model.ProfileViewModel.Address" />
+                        <span asp-validation-for="@Model.ProfileViewModel.Address" class="text-danger"></span>
                     </div>
                 </div>
 
@@ -76,8 +75,10 @@
         </div>
         <div class="col-md-6">
 
-            @*<partial name="~/Views/Shared/Partials/_EditPasswordPartial.cshtml"/>*@
-            @Html.Partial("Partials/_EditPasswordPartial", Model.PasswordEditViewModel)
+            
+          
+            @Html.PartialAsync("Partials/_EditPasswordPartial", Model.PasswordEditViewModel)
+            
            
         </div>
     </div>
